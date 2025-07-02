@@ -71,7 +71,7 @@
         CGFloat viewLeft = CGRectGetMidX(viewBounds) - _initialViewsWidth / 2;
         CGFloat viewRight = CGRectGetMidX(viewBounds) + _initialViewsWidth / 2;
         
-        BOOL isLeftView = (viewRight < centerViewLeft);
+        BOOL isLeftView = (view == _views.firstObject);
         CGFloat distance = isLeftView
         ? centerViewLeft - viewRight
         : viewLeft - centerViewRight;
@@ -80,6 +80,10 @@
         
         if (isLeftView) {
             tx *= -1;
+        }
+        
+        if (isLeftView) {
+            NSLog(@"TX %f", tx);
         }
         
         CGAffineTransform translationTransform = CGAffineTransformMakeTranslation(tx, ty);
