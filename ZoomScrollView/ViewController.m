@@ -24,6 +24,7 @@
     CGFloat _initialDistance;
     CGFloat _initialCenterViewWidth;
     CGFloat _initialViewsWidth;
+    CGFloat _initialCentersDistance;
 }
 
 - (void)viewDidLoad
@@ -39,9 +40,11 @@
 {
     [super viewDidAppear:animated];
     
-    _initialDistance = [self calcDistanceWithView:self.view1];
+    _initialDistance = [self calcDistanceWithView:self.view2];
     _initialCenterViewWidth = [self.centerView convertRect:self.centerView.frame toView:nil].size.width;
-    _initialViewsWidth = [self.centerView convertRect:self.view1.frame toView:nil].size.width;
+    _initialViewsWidth = [self.centerView convertRect:self.view2.frame toView:nil].size.width;
+    
+    _initialCentersDistance = [self centerForView:self.centerView useBounds:NO].x - [self centerForView:self.view1 useBounds:YES].x;
     
     [self printViewInfo:self.centerView name:@"center view" useBounds:YES];
     [self printViewInfo:self.view2 name:@"view 2" useBounds:NO];
@@ -50,17 +53,6 @@
 - (void)updateCurrentZoomLabel
 {
     self.currentZoomLabel.text = [NSString stringWithFormat:@"x%f", self.scrollView.zoomScale];
-}
-
-- (CGFloat)calcDistanceWithView:(UIView *)view
-{
-    CGRect viewRect = [view convertRect:view.frame toView:nil];
-    CGRect centerViewRect = [self.centerView convertRect:self.centerView.frame toView:nil];
-    CGFloat dist = (view == _views.firstObject)
-    ? centerViewRect.origin.x - (viewRect.origin.x + viewRect.size.width) // left view
-    : viewRect.origin.x - (centerViewRect.origin.x + centerViewRect.size.width); // right view
-
-    return fabs(dist);
 }
 
 - (CGFloat)invertedZoomScale
@@ -72,7 +64,10 @@
 {
     [self printViewInfo:self.centerView name:@"center view" useBounds:NO];
     
-    CGPoint centerViewCenter = [self centerForView:self.centerView useBounds:NO];
+    CGPoint centerViewOrigin = [self.centerView convertPoint:CGPointZero toView:nil];
+    CGFloat centerViewWidth = [self.centerView convertRect:self.centerView.frame toView:nil].size.width;
+    CGFloat centerViewRight = centerViewOrigin.x + centerViewWidth;
+    NSLog(@"origin %f width %f right %f", centerViewOrigin.x, centerViewWidth, centerViewRight);
     
     for (UIView *view in _views) {
         CGAffineTransform scaleTransform = CGAffineTransformMakeScale(self.invertedZoomScale, self.invertedZoomScale);
@@ -82,15 +77,19 @@
         // TEX:
         // \Delta = P_0 + \frac{w_B}{2} + \frac{w_A \cdot S}{2} - S \cdot (\text{centerB} - \text{centerA})
         
-        CGPoint viewCenter = [self centerForView:view useBounds:YES];
-        CGFloat tx = _initialDistance + (_initialViewsWidth / 2) + (_initialCenterViewWidth * zoom) / 2 - zoom * (viewCenter.x - centerViewCenter.x);
+        CGRect viewFrame = [view convertRect:view.frame toView:nil];
+        CGFloat viewX = CGRectGetMidX(viewFrame) - _initialViewsWidth / 2;
+        CGFloat distance = viewX - centerViewRight;
+
+        CGFloat centersDistance = [view isEqual:_views.lastObject] ? _initialCentersDistance * 1 : _initialCentersDistance * -1;
+        CGFloat tx = _initialDistance + (_initialViewsWidth / 2) + (_initialCenterViewWidth * zoom) / 2 - zoom * centersDistance;
         CGFloat ty = 0;
         
         if ([view isEqual:_views.lastObject]) {
 //            tx *= -1;
         }
         
-        CGAffineTransform translationTransform = CGAffineTransformMakeTranslation(0, ty);
+        CGAffineTransform translationTransform = CGAffineTransformMakeTranslation(tx, ty);
         view.transform = CGAffineTransformConcat(view.transform, translationTransform);
         
         if ([view isEqual:_views.lastObject]) {
@@ -100,6 +99,17 @@
     }
     
     [self updateCurrentZoomLabel];
+}
+
+- (CGFloat)calcDistanceWithView:(UIView *)view
+{
+    CGRect viewRect = [view convertRect:view.bounds toView:nil];
+    CGRect centerViewRect = [self.centerView convertRect:self.centerView.bounds toView:nil];
+    CGFloat dist = (view == _views.firstObject)
+    ? centerViewRect.origin.x - (viewRect.origin.x + viewRect.size.width) // left view
+    : viewRect.origin.x - (centerViewRect.origin.x + centerViewRect.size.width); // right view
+
+    return fabs(dist);
 }
 
 - (void)printViewInfo:(UIView *)view name:(NSString *)name useBounds:(BOOL)useBounds
@@ -127,6 +137,15 @@
     CGSize size = [view convertRect:rect toView:nil].size;
     
     return CGPointMake(origin.x + size.width / 2, origin.y + size.height / 2);
+}
+
+- (CGRect)rectForView:(UIView *)view useBounds:(BOOL)useBounds
+{
+    CGPoint origin = [view convertPoint:CGPointZero toView:nil];
+    CGRect rect = useBounds ? view.bounds : view.frame;
+    CGSize size = [view convertRect:rect toView:nil].size;
+    
+    return CGRectMake(origin.x, origin.y, rect.size.width, rect.size.height);
 }
 
 #pragma mark - UI Events
