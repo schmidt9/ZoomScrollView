@@ -82,10 +82,6 @@
             tx *= -1;
         }
         
-        if (isLeftView) {
-            NSLog(@"TX %f", tx);
-        }
-        
         CGAffineTransform translationTransform = CGAffineTransformMakeTranslation(tx, ty);
         view.transform = CGAffineTransformConcat(view.transform, translationTransform);
     }
