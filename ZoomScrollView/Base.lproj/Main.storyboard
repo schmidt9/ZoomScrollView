@@ -20,13 +20,13 @@
                                 <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="-5" maximumZoomScale="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZV3-Gi-RQa">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="599.66666666666663"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="keE-3P-x2f">
-                                                <rect key="frame" x="8" y="8" width="377" height="650"/>
+                                                <rect key="frame" x="0.0" y="8" width="393" height="583.66666666666663"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJ2-2T-QPd">
-                                                        <rect key="frame" x="97.666666666666671" y="300" width="50.000000000000014" height="50"/>
+                                                        <rect key="frame" x="105.66666666666669" y="267" width="50" height="50"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="KQE-8W-2lx"/>
@@ -34,7 +34,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2bj-cy-2pa">
-                                                        <rect key="frame" x="163.66666666666666" y="300" width="50" height="50"/>
+                                                        <rect key="frame" x="171.66666666666666" y="267" width="50" height="50"/>
                                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="Y70-Vg-YHO"/>
@@ -42,7 +42,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1XI-9Z-dxE">
-                                                        <rect key="frame" x="229.66666666666666" y="300" width="49.999999999999972" height="50"/>
+                                                        <rect key="frame" x="237.66666666666663" y="267" width="50" height="50"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="7po-v6-ApI"/>
@@ -63,10 +63,10 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                                         <constraints>
-                                            <constraint firstItem="keE-3P-x2f" firstAttribute="leading" secondItem="ZV3-Gi-RQa" secondAttribute="leading" constant="8" id="KsL-YL-rh1"/>
+                                            <constraint firstItem="keE-3P-x2f" firstAttribute="leading" secondItem="ZV3-Gi-RQa" secondAttribute="leading" id="KsL-YL-rh1"/>
                                             <constraint firstAttribute="bottom" secondItem="keE-3P-x2f" secondAttribute="bottom" constant="8" id="MCY-xk-nIP"/>
                                             <constraint firstItem="keE-3P-x2f" firstAttribute="centerX" secondItem="ZV3-Gi-RQa" secondAttribute="centerX" id="UHk-rx-9pW"/>
-                                            <constraint firstAttribute="trailing" secondItem="keE-3P-x2f" secondAttribute="trailing" constant="8" id="VSX-hp-lrL"/>
+                                            <constraint firstAttribute="trailing" secondItem="keE-3P-x2f" secondAttribute="trailing" id="VSX-hp-lrL"/>
                                             <constraint firstItem="keE-3P-x2f" firstAttribute="top" secondItem="ZV3-Gi-RQa" secondAttribute="top" constant="8" id="dGr-Ek-QqO"/>
                                             <constraint firstItem="keE-3P-x2f" firstAttribute="centerY" secondItem="ZV3-Gi-RQa" secondAttribute="centerY" id="o6t-6b-rvn"/>
                                         </constraints>
@@ -74,11 +74,44 @@
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="R7E-x4-NXz"/>
                                         </connections>
                                     </scrollView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="fSq-9K-nuo">
+                                        <rect key="frame" x="16" y="615.66666666666663" width="361" height="34.333333333333371"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cc-Ty-XXT">
+                                                <rect key="frame" x="0.0" y="0.0" width="144" height="34.333333333333336"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="zoom -"/>
+                                                <connections>
+                                                    <action selector="zoomMinusButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BTp-nq-Q3E"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0E-dC-ld6">
+                                                <rect key="frame" x="160" y="0.0" width="41.333333333333343" height="34.333333333333336"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OMw-Eb-vef">
+                                                <rect key="frame" x="217.33333333333337" y="0.0" width="143.66666666666663" height="34.333333333333336"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="zoom +"/>
+                                                <connections>
+                                                    <action selector="zoomPlusButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="14N-7U-HN0"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="OMw-Eb-vef" firstAttribute="width" secondItem="1cc-Ty-XXT" secondAttribute="width" id="Osj-bw-5sn"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="ZV3-Gi-RQa" secondAttribute="bottom" id="3yR-Wm-MGc"/>
+                                    <constraint firstItem="fSq-9K-nuo" firstAttribute="leading" secondItem="c3f-Gr-PMK" secondAttribute="leading" constant="16" id="EIn-aW-2QY"/>
+                                    <constraint firstAttribute="bottom" secondItem="fSq-9K-nuo" secondAttribute="bottom" constant="16" id="Rjn-AK-LOd"/>
                                     <constraint firstItem="ZV3-Gi-RQa" firstAttribute="leading" secondItem="c3f-Gr-PMK" secondAttribute="leading" id="Z4x-bQ-4Lg"/>
+                                    <constraint firstAttribute="trailing" secondItem="fSq-9K-nuo" secondAttribute="trailing" constant="16" id="twu-lc-gmy"/>
+                                    <constraint firstItem="fSq-9K-nuo" firstAttribute="top" secondItem="ZV3-Gi-RQa" secondAttribute="bottom" constant="16" id="vaC-xM-JCf"/>
                                     <constraint firstAttribute="trailing" secondItem="ZV3-Gi-RQa" secondAttribute="trailing" id="weM-aE-bAj"/>
                                     <constraint firstItem="ZV3-Gi-RQa" firstAttribute="top" secondItem="c3f-Gr-PMK" secondAttribute="top" id="xgK-L0-TLE"/>
                                 </constraints>
@@ -95,6 +128,7 @@
                     </view>
                     <connections>
                         <outlet property="centerView" destination="2bj-cy-2pa" id="AGs-Fa-aQm"/>
+                        <outlet property="currentZoomLabel" destination="b0E-dC-ld6" id="Zce-UX-DCQ"/>
                         <outlet property="scrollView" destination="ZV3-Gi-RQa" id="XoN-VB-zVK"/>
                         <outlet property="view1" destination="RJ2-2T-QPd" id="btV-rD-QZp"/>
                         <outlet property="view2" destination="1XI-9Z-dxE" id="2kk-7g-KCx"/>
