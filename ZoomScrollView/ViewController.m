@@ -22,7 +22,6 @@
 {
     NSArray<UIView *> *_views;
     CGFloat _initialDistance;
-    CGFloat _initialCenterViewWidth;
     CGFloat _initialViewsWidth;
 }
 
