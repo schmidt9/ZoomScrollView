@@ -23,10 +23,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="599.66666666666663"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="keE-3P-x2f">
-                                                <rect key="frame" x="8" y="8" width="377" height="583.66666666666663"/>
+                                                <rect key="frame" x="0.0" y="8" width="393" height="583.66666666666663"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJ2-2T-QPd">
-                                                        <rect key="frame" x="97.666666666666671" y="267" width="50.000000000000014" height="50"/>
+                                                        <rect key="frame" x="105.66666666666669" y="267" width="50" height="50"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="KQE-8W-2lx"/>
@@ -34,7 +34,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2bj-cy-2pa">
-                                                        <rect key="frame" x="163.66666666666666" y="267" width="50" height="50"/>
+                                                        <rect key="frame" x="171.66666666666666" y="267" width="50" height="50"/>
                                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="Y70-Vg-YHO"/>
@@ -42,7 +42,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1XI-9Z-dxE">
-                                                        <rect key="frame" x="229.66666666666666" y="267" width="49.999999999999972" height="50"/>
+                                                        <rect key="frame" x="237.66666666666663" y="267" width="50" height="50"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="7po-v6-ApI"/>
@@ -63,10 +63,10 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                                         <constraints>
-                                            <constraint firstItem="keE-3P-x2f" firstAttribute="leading" secondItem="ZV3-Gi-RQa" secondAttribute="leading" constant="8" id="KsL-YL-rh1"/>
+                                            <constraint firstItem="keE-3P-x2f" firstAttribute="leading" secondItem="ZV3-Gi-RQa" secondAttribute="leading" id="KsL-YL-rh1"/>
                                             <constraint firstAttribute="bottom" secondItem="keE-3P-x2f" secondAttribute="bottom" constant="8" id="MCY-xk-nIP"/>
                                             <constraint firstItem="keE-3P-x2f" firstAttribute="centerX" secondItem="ZV3-Gi-RQa" secondAttribute="centerX" id="UHk-rx-9pW"/>
-                                            <constraint firstAttribute="trailing" secondItem="keE-3P-x2f" secondAttribute="trailing" constant="8" id="VSX-hp-lrL"/>
+                                            <constraint firstAttribute="trailing" secondItem="keE-3P-x2f" secondAttribute="trailing" id="VSX-hp-lrL"/>
                                             <constraint firstItem="keE-3P-x2f" firstAttribute="top" secondItem="ZV3-Gi-RQa" secondAttribute="top" constant="8" id="dGr-Ek-QqO"/>
                                             <constraint firstItem="keE-3P-x2f" firstAttribute="centerY" secondItem="ZV3-Gi-RQa" secondAttribute="centerY" id="o6t-6b-rvn"/>
                                         </constraints>
