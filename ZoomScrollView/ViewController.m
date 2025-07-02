@@ -64,31 +64,30 @@
 {
     [self printViewInfo:self.centerView name:@"center view" useBounds:NO];
     
-    CGPoint centerViewOrigin = [self.centerView convertPoint:CGPointZero toView:nil];
+    CGFloat centerViewLeft = [self.centerView convertPoint:CGPointZero toView:nil].x;
     CGFloat centerViewWidth = [self.centerView convertRect:self.centerView.frame toView:nil].size.width;
-    CGFloat centerViewRight = centerViewOrigin.x + centerViewWidth;
-    NSLog(@"origin %f width %f right %f", centerViewOrigin.x, centerViewWidth, centerViewRight);
+    CGFloat centerViewRight = centerViewLeft + centerViewWidth;
+    NSLog(@"origin %f width %f right %f", centerViewLeft, centerViewWidth, centerViewRight);
     
     for (UIView *view in _views) {
         CGAffineTransform scaleTransform = CGAffineTransformMakeScale(self.invertedZoomScale, self.invertedZoomScale);
         view.transform = scaleTransform;
 
-        // delta = (1 - S) * (P0 + (wB - S * wA) / 2)
-        // TEX:
-        // \Delta = P_0 + \frac{w_B}{2} + \frac{w_A \cdot S}{2} - S \cdot (\text{centerB} - \text{centerA})
+        CGRect viewBounds = [view convertRect:view.bounds toView:nil];
+        CGFloat viewLeft = CGRectGetMidX(viewBounds) - _initialViewsWidth / 2;
+        CGFloat viewRight = CGRectGetMidX(viewBounds) + _initialViewsWidth / 2;
         
-        CGRect viewFrame = [view convertRect:view.frame toView:nil];
-        CGFloat viewX = CGRectGetMidX(viewFrame) - _initialViewsWidth / 2;
-        CGFloat distance = viewX - centerViewRight;
-
-        CGFloat centersDistance = [view isEqual:_views.lastObject] ? _initialCentersDistance * 1 : _initialCentersDistance * -1;
-        CGFloat tx = _initialDistance + (_initialViewsWidth / 2) + (_initialCenterViewWidth * zoom) / 2 - zoom * centersDistance;
+        BOOL isLeftView = (viewRight < centerViewLeft);
+        CGFloat distance = isLeftView
+        ? centerViewLeft - viewRight
+        : viewLeft - centerViewRight;
+        CGFloat tx = (_initialDistance - distance) / zoom;
         CGFloat ty = 0;
         
-        if ([view isEqual:_views.lastObject]) {
-//            tx *= -1;
+        if (isLeftView) {
+            tx *= -1;
         }
-        
+
         CGAffineTransform translationTransform = CGAffineTransformMakeTranslation(tx, ty);
         view.transform = CGAffineTransformConcat(view.transform, translationTransform);
         
