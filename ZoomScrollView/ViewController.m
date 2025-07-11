@@ -22,6 +22,9 @@
 {
     NSArray<UIView *> *_views;
     CGFloat _initialDistance;
+    CGFloat _initialCenterViewPadding;
+    CGFloat _initialCenterViewWidth;
+    CGFloat _initialViewsWidth;
 }
 
 - (void)viewDidLoad
@@ -30,7 +33,7 @@
     
     _views = @[self.view1, self.view2];
     
-    [self updateCurrentZoomLabel];
+    [self.scrollView addObserver:self forKeyPath:@"zoomScale" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -38,7 +41,18 @@
     [super viewDidAppear:animated];
     
     // distance from center of "left-side-view" to leading edge of "center-view"
-    _initialDistance = CGRectGetMinX(_centerView.frame) - CGRectGetMidX(_view1.frame);
+    _initialDistance = CGRectGetMinX(self.centerView.frame) - CGRectGetMidX(self.view1.frame);
+    
+    _initialCenterViewWidth = self.centerView.frame.size.width;
+    _initialCenterViewPadding = self.centerView.frame.origin.x;
+    _initialViewsWidth = self.view1.frame.size.width;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"zoomScale"]) {
+        [self updateCurrentZoomLabel];
+    }
 }
 
 - (void)updateCurrentZoomLabel
@@ -60,7 +74,7 @@
         CGFloat tx = (_initialDistance * zoom) - _initialDistance;
         CGFloat ty = 0;
         
-        if (CGRectGetMidX(view.frame) > CGRectGetMidX(_centerView.frame)) {
+        if (CGRectGetMidX(view.frame) > CGRectGetMidX(self.centerView.frame)) {
             // right-side-view, so negative translation
             tx *= -1;
         }
@@ -71,8 +85,6 @@
         // translate, then scale
         view.transform = CGAffineTransformConcat(translationTransform, scaleTransform);
     }
-    
-    [self updateCurrentZoomLabel];
 }
 
 #pragma mark - UI Events
@@ -90,8 +102,16 @@
     }
     
     self.scrollView.zoomScale = newZoom;
+}
+
+- (IBAction)scaleToFitScreenWidthButtonTouchUpInside:(UIButton *)sender
+{
+    CGFloat newCenterViewPadding = _initialViewsWidth + (_initialDistance - _initialViewsWidth / 2);
+    CGFloat scrollViewWidth = self.scrollView.frame.size.width;
+    CGFloat newCenterViewWidth = scrollViewWidth - newCenterViewPadding * 2;
+    CGFloat zoom = newCenterViewWidth / _initialCenterViewWidth;
     
-    [self updateCurrentZoomLabel];
+    self.scrollView.zoomScale = zoom;
 }
 
 - (IBAction)zoomPlusButtonTouchUpInside:(UIButton *)sender
@@ -101,8 +121,6 @@
     self.scrollView.zoomScale = (newZoom > self.scrollView.maximumZoomScale)
     ? self.scrollView.maximumZoomScale
     : newZoom;
-    
-    [self updateCurrentZoomLabel];
 }
 
 # pragma mark - UIScrollViewDelegate
