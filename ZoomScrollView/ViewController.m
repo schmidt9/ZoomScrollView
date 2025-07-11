@@ -32,8 +32,6 @@
     [super viewDidLoad];
     
     _views = @[self.view1, self.view2];
-    
-    [self.scrollView addObserver:self forKeyPath:@"zoomScale" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -46,13 +44,6 @@
     _initialCenterViewWidth = self.centerView.frame.size.width;
     _initialCenterViewPadding = self.centerView.frame.origin.x;
     _initialViewsWidth = self.view1.frame.size.width;
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:@"zoomScale"]) {
-        [self updateCurrentZoomLabel];
-    }
 }
 
 - (void)updateCurrentZoomLabel
@@ -85,6 +76,8 @@
         // translate, then scale
         view.transform = CGAffineTransformConcat(translationTransform, scaleTransform);
     }
+    
+    [self updateCurrentZoomLabel];
 }
 
 #pragma mark - UI Events
